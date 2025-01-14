@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const { connectDB } = require('./databases/config');
 const cors = require('cors');
@@ -18,10 +19,13 @@ app.use(express.static('public'));
 // parseo y lectura del body
 app.use(express.json());
 
-// rutas
-
+// Rutas
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/events', require('./routes/events'));
+
+app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+})
 
 // TODO: CRUD: eventos
 
